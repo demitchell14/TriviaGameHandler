@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "alwaysStrict": true,
+    "sourceMap": true,
+    "outDir": "bin",
+    "declaration": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "test",
+    "node_modules"
+  ]
+}
