@@ -1,0 +1,98 @@
+{
+    "_id": "5bbc0efdab8d0a38f4fc5094",
+    "name": "Game Test!",
+    "teams": [
+        {
+            "name": "Team 1",
+            "members": [
+                {
+                    "id": -1,
+                    "name": "Devin"
+                },
+                {
+                    "id": -1,
+                    "name": "John"
+                }
+            ],
+            "answers": [
+                {
+                    "type": "Open Ended",
+                    "answer": "We live",
+                    "correct": "Judgement Required",
+                    "question": "What happens next?"
+                },
+                {
+                    "type": "Multiple Choice",
+                    "answer": "We live",
+                    "correct": false,
+                    "question": "Well.. that happened?"
+                }
+            ]
+        },
+        {
+            "name": "Devin G Mitchell",
+            "members": [
+                {
+                    "name": "Devin G Mitchell"
+                }
+            ],
+            "answers": []
+        },
+        {
+            "name": "Devin G Mitchell1",
+            "members": [
+                {
+                    "name": "Devin G Mitchell"
+                }
+            ],
+            "answers": []
+        }
+    ],
+    "questions": [
+        {
+            "question": "What is the answer to the universe?",
+            "type": "Open Ended",
+            "answer": "",
+            "choices": [],
+            "timeLimit": 0
+        },
+        {
+            "question": "What happens next?",
+            "type": "Open Ended",
+            "answer": "We live",
+            "choices": [],
+            "timeLimit": 0
+        },
+        {
+            "question": "Well.. that happened?",
+            "type": "Multiple Choice",
+            "answer": "Whatever, it is what it is.",
+            "choices": [
+                {
+                    "answer": "We live",
+                    "correct": false
+                },
+                {
+                    "answer": "We die",
+                    "correct": false
+                },
+                {
+                    "answer": "We Die!!",
+                    "correct": false
+                },
+                {
+                    "answer": "Hello World!",
+                    "correct": false
+                },
+                {
+                    "answer": "Whatever, it is what it is.",
+                    "correct": true
+                }
+            ],
+            "timeLimit": 0
+        }
+    ],
+    "started": true,
+    "token": "game123",
+    "currentQuestionId": 3
+}
