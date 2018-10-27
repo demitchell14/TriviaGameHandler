@@ -4,7 +4,11 @@
   "description": "",
   "main": "run.js",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+    "watch": "tsc -w",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test-game": "mocha -r ts-node/register test/game.spec.ts",
+    "test-question": "mocha -r ts-node/register test/question.spec.ts",
+    "test-team": "mocha -r ts-node/register test/team.spec.ts"
   },
   "author": "",
   "license": "ISC",
