@@ -8,10 +8,10 @@ let games:Game[] = [];
 
 
 
-let player1 = new Player(1, "Devin");
-let player2 = new Player(2, "Salt");
-let player3 = new Player(3, "Door");
-let player4 = new Player(4, "John");
+let player1 = new Player({name: "Devin"});
+let player2 = new Player({name: "Salt"});
+let player3 = new Player({name: "Joe"});
+let player4 = new Player({name: "John"});
 
 
 let team1 = new Team({
@@ -33,6 +33,7 @@ let question2 = new Question({
 
 let game = new Game({
     name: "Game",
+    token: "agame123",
     teams: [team1, team2],
     questions: [question1, question2]
 })

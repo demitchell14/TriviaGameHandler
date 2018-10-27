@@ -1,12 +1,14 @@
-import Player from "./Player";
+import Player, { PlayerOptions } from "./Player";
+//@ts-ignore
 import * as uuidv1 from "uuid/v1";
 import Question, {Choice, Type} from "./Question";
 
 class Team {
     key?: string;
+    key2?:string;
     name: string;
     members: Player[];
-    answers: Answer[];
+    answers: Answer[]; 
     //answer: (str: string) => boolean;
 
     constructor(options?:TeamOptions|string) {
@@ -39,7 +41,7 @@ class Team {
             if (options.key) {
                 this.key = options.key;
             } else {
-                this.key = this.key = uuidv1();
+                this.key = uuidv1();
             }
         }
 
@@ -47,7 +49,8 @@ class Team {
     }
 
     setKey(key: string) {
-        return this.key = key;
+        this.key = key;
+        return this;
     }
 
     isAuthorized(key:string) {
@@ -80,17 +83,13 @@ class Team {
 
     addMember(...players: any[]): boolean {
         let success = players.map(player => {
+            //console.log(players);
             if (!this.hasMember(player)) {
                 //console.log(player);
-
-                this.members.push(new Player(player));
-                return true;
-
-                if (typeof player !== "string") {
+                if (player instanceof Player)
                     this.members.push(player);
-                } else {
+                else
                     this.members.push(new Player(player));
-                }
                 return true;
             }
             return false;
@@ -135,7 +134,8 @@ class Team {
         return {
             name: this.name,
             members: this.members ? this.members.map(r => r.toJSON()) : undefined,
-            answers: this.answers ? this.answers.map(a => a) : undefined
+            answers: this.answers ? this.answers.map(a => a) : undefined,
+            ///key: this.key
         }
     }
 

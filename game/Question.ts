@@ -9,6 +9,8 @@ const questionTypes = {
 class Question {
     type: string;
     question: string;
+    questionDetails: string;
+    questionImage: string;
     points: number;
 
     choices: Choice[];
@@ -22,6 +24,8 @@ class Question {
         this.question = opts.question || "";
         this.type = opts.type || questionTypes.OPEN_ENDED;
         this.answer = opts.answer || "";
+        this.questionDetails = opts.questionDetails;
+        this.questionImage = opts.questionImage;
 
         // @ts-ignore
         if (opts.answers) {
@@ -162,6 +166,12 @@ export interface QuestionOptions {
 
     choices?: ChoiceOpts[]|any;
     answer?: string;
+
+    /**
+     * @example "Normally would be a few sentences if used." 
+     */
+    questionDetails?: string;
+    questionImage?: string;
 
     started?: boolean;
     timeLimit?: number;

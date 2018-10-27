@@ -3,6 +3,8 @@ import Team from "./Team";
 import Player from "./Player";
 import Question, {QuestionOptions, Type} from "./Question";
 
+const MAX_QUEUE = 1;
+
 class Game {
     name: string;
     token: string;
@@ -10,6 +12,8 @@ class Game {
     currentQuestionId: number;
     teams: Team[];
     questions: Question[];
+    needsUpdate:boolean;
+    private updatesQueued:number;
 
 
     constructor(options: GameOptions) {
@@ -25,8 +29,10 @@ class Game {
             });
         }
 
-
+        //console.log(options.teams);
         this.teams = options.teams || [];
+
+       // this.teams.map((t) => console.log(t.key));
 
         if (options.questions) {
             options.questions = options.questions.map(question => {
@@ -48,18 +54,23 @@ class Game {
         if (this.name === "" || typeof this.name !== "string") {
             throw new Error("Name is required to run a Game.");
         }
+        this.needsUpdate = false;
+        this.updatesQueued = 0;
     }
 
     setName(str:string) {
         this.name = str;
+        this.update(true);
     }
 
     setToken(str: string) {
         this.token = str;
+        this.update(true);
     }
 
     setStarted(bool: boolean) {
         this.started = bool;
+        this.update(true);
     }
 
     answer(team:Team|number|string, choice:any) {
@@ -82,6 +93,7 @@ class Game {
                     return team.answer(question, choice)
             }
         }
+        this.update(true);
     }
 
     // -- >> Team Functions
@@ -92,23 +104,34 @@ class Game {
             //console.log("WTF ", team.name);
             team = team.name;
         }
+        let uuidPattern = new RegExp(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+        //console.log(team);
+        if (!team.match(uuidPattern)) {
+            // -- Find team based on name
+            return this.teams.find(t => t.name === team) !== undefined;
+        } else {
+            // -- Find team based on authorize string
+            return this.teams.find(t => t.key === team) !== undefined;
+        }
+        //if (token.key && token.key.match(uuidPattern)) {
 
-        return this.teams.find(t => t.name === team) !== undefined;
     }
 
-    getTeam(name: string|Team):Team {
+    getTeam(team: string|Team):Team {
 
-        if (typeof name !== "string")
-            name = name.name;
+        if (typeof team !== "string")
+            team = team.name;
 
         //console.log(name);
 
-        let x= this.teams.find(t => t.name === name);
-        //console.log(x);
-
-
-
-        return x;
+        let uuidPattern = new RegExp(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+        if (!team.match(uuidPattern)) {
+            // -- Find team based on name
+            return this.teams.find(t => t.name === team);
+        } else {
+            // -- Find team based on authorize string
+            return this.teams.find(t => t.key === team);
+        }
     }
 
     addTeam(...teams: any[]): boolean {
@@ -130,6 +153,7 @@ class Game {
             }
             return false;
         });
+        this.update(true);
         return success.every(s => s === true);
     }
 
@@ -146,7 +170,7 @@ class Game {
             }
             return false;
         });
-
+        this.update(true);
         return success.every(s => s === true);
     }
 
@@ -163,7 +187,7 @@ class Game {
 
         //console.log(this.questions);
         //this.questions.push(question);
-
+        this.update(true);
     }
 
     getQuestion(id: number|Question|string): Question {
@@ -195,15 +219,29 @@ class Game {
 
     nextQuestion() {
         this.currentQuestionId ++;
-
+        this.update(true);
     }
 
     reset() {
         this.currentQuestionId = 0;
+        this.update(true);
     }
 
     // -- >> End Question Functions
 
+    update(bool?:boolean) {
+        // -- todo trigger check
+        if (typeof bool !== "undefined") {
+            if (bool === false) {
+                this.updatesQueued = -1;
+            }
+            this.updatesQueued++;
+            this.needsUpdate = bool;
+        } else {
+            console.debug(`${this.updatesQueued} Total Updates Queued for Game: '${this.name}.'`)
+            return this.updatesQueued >= MAX_QUEUE
+        }
+    }
 }
 
 
@@ -214,6 +252,8 @@ export interface GameOptions {
     token: string;
     teams?: Team[];
     questions?: Question[];
+    updatesQueued?: number;
+    needsUpdate?: boolean
 }
 
 export default Game;
