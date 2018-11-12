@@ -110,7 +110,7 @@ class Team {
         return false;
     }
 
-    answer(question: Question, choice:string|Choice) {
+    answer(question: Question, choice:string|Choice):Answer {
         let exists = this.answers.find((ans) => {
             if (ans.question) {
                 return (ans.question === question.question)
@@ -126,7 +126,8 @@ class Team {
                 correct: question.type === Type.MULTIPLE_CHOICE ? question.correct(choice) : "Judgement Required",
                 question: question.question
             };
-            this.answers.push(response)
+            this.answers.push(response);
+            return response;
         }
     }
 
@@ -135,8 +136,12 @@ class Team {
             name: this.name,
             members: this.members ? this.members.map(r => r.toJSON()) : undefined,
             answers: this.answers ? this.answers.map(a => a) : undefined,
-            ///key: this.key
+            key: this.key
         }
+    }
+
+    cleanName() {
+        return this.name.replace(/\W+/g, "");
     }
 
 }

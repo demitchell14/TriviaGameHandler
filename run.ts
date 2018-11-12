@@ -30,39 +30,3 @@ let question1 = new Question({
 let question2 = new Question({
     question: "Who is the Vice President?",
 });
-
-let game = new Game({
-    name: "Game",
-    token: "agame123",
-    teams: [team1, team2],
-    questions: [question1, question2]
-})
-
-game.addQuestion({
-    question: "Who made this?",
-});
-
-
-
-let toAnswerTeam = game.getTeam("Team 1");
-let toAnswer = game.getQuestion(1);
-
-
-
-//te.answer(1, "");
-//console.log(question1, question2);
-//console.log(team1, team2);
-//console.log(game.getTeam("Team 1"));
-//console.log(game.getTeam("Team 2"));
-
-game.addQuestion({
-    question: "What happens?",
-});
-
-game.addQuestion({
-    question: "What is the answer to the universe?",
-    answer: "42",
-    type: Type.OPEN_ENDED
-});
-
-console.log(game);

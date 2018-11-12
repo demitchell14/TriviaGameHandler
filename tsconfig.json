@@ -4,6 +4,7 @@
     "target": "es2015",
     "alwaysStrict": true,
     "sourceMap": true,
+    "declaration": true,
     "outDir": "bin",
     "allowSyntheticDefaultImports": true
   },

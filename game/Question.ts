@@ -124,7 +124,7 @@ class Question {
             return this.choices[choice];
     }
 
-    correct(choice):boolean|undefined {
+    correct(choice:string|Choice):boolean|undefined {
         if (this.type === questionTypes.MULTIPLE_CHOICE) {
             if (choice instanceof Choice)
                 choice = choice.answer;

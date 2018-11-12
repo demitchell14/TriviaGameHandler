@@ -1,24 +1,35 @@
 
 import Team from "./Team";
 import Player from "./Player";
-import Question, {QuestionOptions, Type} from "./Question";
+import Question, {QuestionOptions, Type as QType} from "./Question";
+import * as moment from "moment";
+import {Moment} from "moment";
 
 const MAX_QUEUE = 1;
 
 class Game {
+    _id: any;
     name: string;
+    description:string;
     token: string;
     started: boolean;
-    currentQuestionId: number;
+    startTime: string;
     teams: Team[];
     questions: Question[];
     needsUpdate:boolean;
+
+    paused:boolean;
+
+    private currentQuestionId: number;
     private updatesQueued:number;
 
 
     constructor(options: GameOptions) {
         this.name = options.name;
+        this["_id"] = options["_id"];
+        this.paused = typeof options.paused !== "undefined" ? options.paused : true;
         this.currentQuestionId = options.currentQuestionId || 0;
+        this.description = options.description;
 
         if (options.teams) {
             options.teams = options.teams.map(team => {
@@ -56,6 +67,13 @@ class Game {
         }
         this.needsUpdate = false;
         this.updatesQueued = 0;
+
+        if (typeof options.startTime !== "undefined") {
+            this.startTime = options.startTime;
+        } else {
+            let d = new Date();
+            this.startTime = `${d.getFullYear()}-${d.getUTCMonth()+1}-${d.getUTCDate()} ${d.getHours()}:${d.getMinutes()}`
+        }
     }
 
     setName(str:string) {
@@ -70,29 +88,6 @@ class Game {
 
     setStarted(bool: boolean) {
         this.started = bool;
-        this.update(true);
-    }
-
-    answer(team:Team|number|string, choice:any) {
-        if (team instanceof Team) {
-            team = team.name;
-        } else {
-            if (typeof team === "number")
-                team = this.teams[team];
-        }
-        team = this.getTeam(team);
-        //console.log(team);
-        if (team) {
-            let question = this.getCurrentQuestion();
-            //console.log(question);
-            switch (question.type) {
-                case Type.MULTIPLE_CHOICE:
-                    choice = question.getChoice(choice);
-                    return team.answer(question, choice)
-                case Type.OPEN_ENDED:
-                    return team.answer(question, choice)
-            }
-        }
         this.update(true);
     }
 
@@ -111,6 +106,7 @@ class Game {
             return this.teams.find(t => t.name === team) !== undefined;
         } else {
             // -- Find team based on authorize string
+
             return this.teams.find(t => t.key === team) !== undefined;
         }
         //if (token.key && token.key.match(uuidPattern)) {
@@ -205,8 +201,20 @@ class Game {
         //return this.questions.find(q => q.id === id);
     }
 
+    getCurrentQuestionIndex() {
+        if (this.paused)
+            return -1;
+
+        if (this.currentQuestionId >= this.questions.length)
+            return -100;
+
+        return this.currentQuestionId;
+    }
+
     getCurrentQuestion() {
         let current = this.questions[this.currentQuestionId];
+        if (this.paused)
+            return -1;
         if (current) {
             return current;
         } else {
@@ -216,15 +224,43 @@ class Game {
             console.log(this.currentQuestionId, this.questions.length);
         }
     }
+    question() {
+        return {
+            pause: () => this.paused = true,
+            resume: () => this.paused = false,
+
+            current: (): Question|undefined => {
+                let idx = this.getCurrentQuestionIndex();
+                if (idx >= 0)
+                    return this.questions[idx];
+            },
+            reset: () => {
+                this.currentQuestionId = 0;
+                this.update(true);
+            },
+            next: () => {
+                let idx = this.getCurrentQuestionIndex();
+                if (idx + 1 < this.questions.length) {
+                    // -- Next question is valid
+                    this.currentQuestionId++;
+                    return this.question().current();
+                } else this.currentQuestionId = -100;
+            }
+        }
+    }
+
 
     nextQuestion() {
         this.currentQuestionId ++;
         this.update(true);
     }
 
-    reset() {
-        this.currentQuestionId = 0;
-        this.update(true);
+    reset(removeTeams?:boolean) {
+        this.question().reset();
+
+        if (removeTeams)
+            this.teams = [];
+
     }
 
     // -- >> End Question Functions
@@ -246,12 +282,17 @@ class Game {
 
 
 export interface GameOptions {
+    _id?:any;
     name: string;
+    token: string;
+
+    paused?: boolean;
+    startTime?:string;
+    description?:string;
     currentQuestionId?: number;
     started?: boolean;
-    token: string;
-    teams?: Team[];
-    questions?: Question[];
+    teams?: Team[]|any;
+    questions?: Question[]|any;
     updatesQueued?: number;
     needsUpdate?: boolean
 }
