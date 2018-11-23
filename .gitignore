@@ -8,6 +8,8 @@
 out
 gen
 
+json
+
 bin/**/*
 package-lock.json
 
