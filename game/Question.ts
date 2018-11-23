@@ -1,4 +1,5 @@
 import Answer from "./Answer";
+import moment = require("moment");
 
 const questionTypes = {
     OPEN_ENDED: "Open Ended",
@@ -18,6 +19,7 @@ class Question {
 
     started: boolean;
     timeLimit: number;
+    timeLeft:number;
 
     constructor(opts: QuestionOptions) {
         //console.log("Making new Question,", opts.question);
@@ -26,6 +28,8 @@ class Question {
         this.answer = opts.answer || "";
         this.questionDetails = opts.questionDetails;
         this.questionImage = opts.questionImage;
+        this.started = false;
+        this.timeLeft = -1;
 
         // @ts-ignore
         if (opts.answers) {
@@ -118,6 +122,12 @@ class Question {
     }
 
     getChoice(choice:string|number):Choice {
+
+        //console.log(choice, this.type);
+        if (this.type === "Open Ended" && typeof choice === "string")
+            return new Choice({
+                answer: choice
+            });
         if (typeof choice === "string") {
             return this.choices.find(c => c.answer === choice)
         } else
@@ -155,6 +165,30 @@ class Question {
             this.answer = typeof arg === "string" ? arg : this.choices[arg].answer;
 
         }
+    }
+
+
+    *start() {
+        this.setStarted(true);
+        let max = this.timeLimit;
+        if (this.timeLeft !== -1)
+            max = this.timeLeft;
+        //let current= moment();
+        let end = moment().add(max, "seconds");
+
+        yield end.diff(moment(), "seconds");
+        while (end.diff(moment(), "seconds") > 0 && this.started) {
+            //console.log(this)
+            this.timeLeft = end.diff(moment(), "seconds");
+            yield this.timeLeft;
+        }
+
+        this.setStarted(false);
+        //yield this.timeLeft = -1;
+    }
+
+    setStarted(bool:boolean) {
+        this.started = bool;
     }
 
 }

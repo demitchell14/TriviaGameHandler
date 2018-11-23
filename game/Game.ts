@@ -11,6 +11,7 @@ class Game {
     _id: any;
     name: string;
     description:string;
+    image:string;
     token: string;
     started: boolean;
     startTime: string;
@@ -30,6 +31,7 @@ class Game {
         this.paused = typeof options.paused !== "undefined" ? options.paused : true;
         this.currentQuestionId = options.currentQuestionId || 0;
         this.description = options.description;
+        this.image = options.image; // TODO || "some default image"
 
         if (options.teams) {
             options.teams = options.teams.map(team => {
@@ -87,6 +89,7 @@ class Game {
     }
 
     setStarted(bool: boolean) {
+        this.questions.map(q => q.setStarted(false));
         this.started = bool;
         this.update(true);
     }
@@ -202,8 +205,6 @@ class Game {
     }
 
     getCurrentQuestionIndex() {
-        if (this.paused)
-            return -1;
 
         if (this.currentQuestionId >= this.questions.length)
             return -100;
@@ -221,24 +222,39 @@ class Game {
             if (this.currentQuestionId >=this.questions.length) {
                 throw new Error("Game is over. No more questions.");
             }
-            console.log(this.currentQuestionId, this.questions.length);
+            //console.log(this.currentQuestionId, this.questions.length);
         }
     }
     question() {
         return {
-            pause: () => this.paused = true,
-            resume: () => this.paused = false,
+            pause: () => {
+                this.paused = true;
+                this.questions.map(q => q.setStarted(false));
+            },
+            resume: () => {
+                this.paused = false;
+                let curr = this.question().current()
+                //if (curr) curr.setStarted(false)
+            },
 
             current: (): Question|undefined => {
                 let idx = this.getCurrentQuestionIndex();
-                if (idx >= 0)
+                if (idx >= 0) {
+                    //this.questions[idx].setStarted(true);
                     return this.questions[idx];
+                }
             },
             reset: () => {
+                this.questions.map(q => {
+                    q.setStarted(false)
+                    q.timeLeft = -1;
+                });
                 this.currentQuestionId = 0;
                 this.update(true);
             },
             next: () => {
+                let curr = this.question().current()
+                if (curr) curr.setStarted(false)
                 let idx = this.getCurrentQuestionIndex();
                 if (idx + 1 < this.questions.length) {
                     // -- Next question is valid
@@ -278,6 +294,10 @@ class Game {
             return this.updatesQueued >= MAX_QUEUE
         }
     }
+
+    compare(comparable:Game) {
+        return undefined;
+    }
 }
 
 
@@ -289,6 +309,7 @@ export interface GameOptions {
     paused?: boolean;
     startTime?:string;
     description?:string;
+    image?:string;
     currentQuestionId?: number;
     started?: boolean;
     teams?: Team[]|any;
