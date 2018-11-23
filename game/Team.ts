@@ -1,4 +1,5 @@
 import Player, { PlayerOptions } from "./Player";
+import * as _ from "lodash";
 //@ts-ignore
 import * as uuidv1 from "uuid/v1";
 import Question, {Choice, Type} from "./Question";
@@ -126,17 +127,25 @@ class Team {
                 correct: question.type === Type.MULTIPLE_CHOICE ? question.correct(choice) : "Judgement Required",
                 question: question.question
             };
+
+            //console.log(response)
             this.answers.push(response);
+
+            //console.log(this.answers);
             return response;
         }
     }
 
     toJSON() {
+        let tmp = _.cloneDeep(this);
         return {
-            name: this.name,
-            members: this.members ? this.members.map(r => r.toJSON()) : undefined,
-            answers: this.answers ? this.answers.map(a => a) : undefined,
-            key: this.key
+            name: tmp.name,
+            members: tmp.members ? tmp.members.map(r => r.toJSON()) : undefined,
+            answers: tmp.answers ? tmp.answers.map(a => {
+                //delete a.answer;
+                return a;
+            }) : undefined,
+            key: tmp.key
         }
     }
 
