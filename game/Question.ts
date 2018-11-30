@@ -28,7 +28,7 @@ class Question {
         this.answer = opts.answer || "";
         this.questionDetails = opts.questionDetails;
         this.questionImage = opts.questionImage;
-        this.started = false;
+        this.started = opts.started || false;
         this.timeLeft = -1;
 
         // @ts-ignore
