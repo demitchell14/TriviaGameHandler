@@ -1,0 +1,223 @@
+{
+  "_id": "5bf1e354c004e73410b3307b",
+  "name": "Friends Trivia",
+  "description": "In honor of Veteran's Day we will be having a military themed trivia hosted by our own Veteran, Grayson Wing. Get your team together and show off your military and history knowledge.",
+  "image": "https://scontent-dfw5-2.xx.fbcdn.net/v/t1.0-9/46512164_2162412080648102_3535604987734261760_n.jpg?_nc_cat=109&_nc_ht=scontent-dfw5-2.xx&oh=0584f874eb710543aa5990bea05c6247&oe=5C644F92",
+  "token": "game123",
+  "startTime": "2018-11-25T18:00",
+  "currentQuestionId": 0,
+  "started": true,
+  "paused": true,
+  "teams": [
+    {
+      "name": "Team 1",
+      "members": [
+        {
+          "id": null,
+          "name": "Devin"
+        }
+      ],
+      "answers": [],
+      "key": "463423b0-db32-11e8-8b54-ebcd533c0b58"
+    },
+    {
+      "name": "ggd",
+      "members": [],
+      "answers": [],
+      "key": "a0c05af0-f118-11e8-981c-974e112f1bdf"
+    },
+    {
+      "name": "vcx",
+      "members": [],
+      "answers": [],
+      "key": "5837a460-f11c-11e8-bc5e-a7018db1cd2d"
+    },
+    {
+      "name": "Slapjack 5",
+      "members": [],
+      "answers": [
+        {
+          "type": "Multiple Choice",
+          "answer": null,
+          "correct": false,
+          "question": "In the year 1900 in the U.S. what were the most popular first names given to boy and girl babies?"
+        }
+      ],
+      "key": "ea9c4ea0-01ed-11e9-8d63-83d43f5818f6"
+    },
+    {
+      "name": "Slapjack 6",
+      "members": [],
+      "answers": [
+        {
+          "type": "Multiple Choice",
+          "answer": null,
+          "correct": false,
+          "question": "In the year 1900 in the U.S. what were the most popular first names given to boy and girl babies?"
+        }
+      ],
+      "key": "090d94c0-01ee-11e9-8d63-83d43f5818f6"
+    },
+    {
+      "name": "Slapjack 7",
+      "members": [],
+      "answers": [],
+      "key": "55eb3870-01e8-11e9-a7d6-a5199343fe2c"
+    },
+    {
+      "name": "Slapjack 8",
+      "members": [],
+      "answers": [],
+      "key": "a7127310-01ea-11e9-a064-d199b433fcb0"
+    }
+  ],
+  "questions": [
+    {
+      "question": "In the year 1900 in the U.S. what were the most popular first names given to boy and girl babies?",
+      "type": "Multiple Choice",
+      "answer": "John and Mary",
+      "questionDetails": null,
+      "questionImage": null,
+      "started": false,
+      "timeLeft": -1,
+      "choices": [
+        {
+          "answer": "William and Elizabeth",
+          "correct": false
+        },
+        {
+          "answer": "Joseph and Catherine",
+          "correct": false
+        },
+        {
+          "answer": "John and Mary",
+          "correct": true
+        },
+        {
+          "answer": "George and Anne",
+          "correct": false
+        }
+      ],
+      "points": 3,
+      "timeLimit": 10
+    },
+    {
+      "question": "When did the Liberty Bell get its name?",
+      "type": "Multiple Choice",
+      "answer": "in the 19th century, when it became a symbol of the abolition of slavery",
+      "questionDetails": null,
+      "questionImage": null,
+      "started": false,
+      "timeLeft": -1,
+      "choices": [
+        {
+          "answer": "when it was made, in 1701",
+          "correct": false
+        },
+        {
+          "answer": "when it rang on July 4, 1776",
+          "correct": false
+        },
+        {
+          "answer": "in the 19th century, when it became a symbol of the abolition of slavery",
+          "correct": true
+        },
+        {
+          "answer": "none of the above",
+          "correct": false
+        }
+      ],
+      "points": 3,
+      "timeLimit": 10
+    },
+    {
+      "question": "In the Roy Rogers -Dale Evans Museum, you will find Roy and Dales stuffed horses. Roy's horse was named Trigger, which was Dales horse?",
+      "type": "Multiple Choice",
+      "answer": "Buttermilk",
+      "questionDetails": null,
+      "questionImage": null,
+      "started": false,
+      "timeLeft": -1,
+      "choices": [
+        {
+          "answer": "Buttermilk",
+          "correct": true
+        },
+        {
+          "answer": "Daisy",
+          "correct": false
+        },
+        {
+          "answer": "Scout",
+          "correct": false
+        },
+        {
+          "answer": "Tulip",
+          "correct": false
+        }
+      ],
+      "points": 3,
+      "timeLimit": 10
+    },
+    {
+      "question": "The Daniel Boon museum at the home where he died can best be described how?",
+      "type": "Multiple Choice",
+      "answer": "a four-story Georgian-style home in Missouri",
+      "questionDetails": null,
+      "questionImage": null,
+      "started": false,
+      "timeLeft": -1,
+      "choices": [
+        {
+          "answer": "a log cabin in Kentucky",
+          "correct": false
+        },
+        {
+          "answer": "a two-story clapboard house in Tennessee",
+          "correct": false
+        },
+        {
+          "answer": "a four-story Georgian-style home in Missouri",
+          "correct": true
+        },
+        {
+          "answer": "a three story brick house in Arkansas",
+          "correct": false
+        }
+      ],
+      "points": 3,
+      "timeLimit": 10
+    },
+    {
+      "question": "Which of the following items was owned by the fewest U.S. homes in 1990?",
+      "type": "Multiple Choice",
+      "answer": "compact disk player",
+      "questionDetails": null,
+      "questionImage": null,
+      "started": false,
+      "timeLeft": -1,
+      "choices": [
+        {
+          "answer": "home computer",
+          "correct": false
+        },
+        {
+          "answer": "compact disk player",
+          "correct": true
+        },
+        {
+          "answer": "cordless phone",
+          "correct": false
+        },
+        {
+          "answer": "dishwasher",
+          "correct": false
+        }
+      ],
+      "points": 3,
+      "timeLimit": 10
+    }
+  ],
+  "needsUpdate": false,
+  "updatesQueued": 0
+}

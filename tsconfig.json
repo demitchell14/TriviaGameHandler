@@ -1,15 +1,12 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2015",
-    "alwaysStrict": true,
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "bin",
-    "allowSyntheticDefaultImports": true
-  },
-  "exclude": [
-    "test",
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "alwaysStrict": true,
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "bin",
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["test", "node_modules"]
 }
