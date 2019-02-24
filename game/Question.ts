@@ -1,5 +1,5 @@
 import Answer from "./Answer";
-import moment = require("moment");
+import * as moment from "moment";
 
 const questionTypes = {
     OPEN_ENDED: "Open Ended",
@@ -8,6 +8,7 @@ const questionTypes = {
 };
 
 class Question {
+    _id: string|any;
     type: string;
     question: string;
     questionDetails: string;
@@ -23,6 +24,7 @@ class Question {
 
     constructor(opts: QuestionOptions) {
         //console.log("Making new Question,", opts.question);
+        this._id = opts._id;
         this.question = opts.question || "";
         this.type = opts.type || questionTypes.OPEN_ENDED;
         this.answer = opts.answer || "";
@@ -191,9 +193,11 @@ class Question {
         this.started = bool;
     }
 
+
 }
 
 export interface QuestionOptions {
+    _id: string|any;
     type?: string;
     question?: string;
     points?: number;

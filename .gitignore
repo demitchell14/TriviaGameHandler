@@ -8,10 +8,9 @@
 out
 gen
 
-json
+/json/
 
 bin/**/*
-package-lock.json
 
 ### Node template
 # Logs

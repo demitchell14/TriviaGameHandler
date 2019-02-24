@@ -1,8 +1,9 @@
 {
-    "name": "guano-trivia",
+    "name": "notrivia",
     "version": "1.0.0",
-    "description": "",
-    "main": "run.js",
+    "description": "NoTrivia - A trivia game manager written in javascript, for javascript.",
+    "private": true,
+    "main": "bin/index.js",
     "scripts": {
         "build": "tsc -b",
         "prettier": "prettier --config ./.prettierrc **/*.ts --write",
@@ -12,11 +13,10 @@
         "test-question": "mocha -r ts-node/register test/question.spec.ts",
         "test-team": "mocha -r ts-node/register test/team.spec.ts"
     },
-    "author": "",
+    "author": "Devin Mitchell",
     "license": "ISC",
     "dependencies": {
         "moment": "^2.22.2",
-        "mongodb": "^3.1.9",
         "uuid": "^3.3.2"
     },
     "devDependencies": {

@@ -9,7 +9,7 @@ import Question, { QuestionOptions, Type as QType } from "./Question";
 
 const MAX_QUEUE = 1;
 
-class Game {
+export class Game {
     _id: any;
     name: string;
     description: string;
@@ -27,13 +27,20 @@ class Game {
     private updatesQueued: number;
 
     constructor(options: GameOptions) {
-        this.name = options.name;
-        this["_id"] = options["_id"];
+        this.name = options.name || "unnamed game";
+        if (options._id)
+            this["_id"] = options["_id"];
+
         this.paused =
             typeof options.paused !== "undefined" ? options.paused : true;
+
         this.currentQuestionId = options.currentQuestionId || 0;
-        this.description = options.description;
-        this.image = options.image; // TODO || "some default image"
+
+        if (options.description)
+            this.description = options.description;
+
+        if (options.image)
+            this.image = options.image; // TODO || "some default image"
 
         if (options.teams) {
             options.teams = options.teams.map((team) => {
@@ -81,6 +88,10 @@ class Game {
     setName(str: string) {
         this.name = str;
         this.update(true);
+    }
+
+    getName() {
+        return this.name;
     }
 
     setToken(str: string) {
