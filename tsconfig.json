@@ -1,14 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
-        "alwaysStrict": true,
-        "sourceMap": true,
-        "outDir": "bin",
-        "declarationDir": "types",
-        "declaration": true,
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true
-    },
-    "exclude": ["test", "node_modules"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "alwaysStrict": true,
+    "sourceMap": true,
+    "declaration": false,
+    "outDir": "bin",
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "test",
+    "node_modules"
+  ]
 }

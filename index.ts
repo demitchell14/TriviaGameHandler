@@ -1,33 +1,15 @@
 /**
  * @prettier
  */
+import { ObjectId } from "bson";
 
-// import _Game from "./game/Game";
-// import _Question from "./game/Question";
-// import _Team from "./game/Team";
-// import _Answer from "./game/Answer";
-// import _Player from "./game/Player";
-
-// export interface Game extends _Game {}
-// export interface Question extends _Question {}
-// export interface Team extends _Team {}
-// export interface Answer extends _Answer {}
-// export interface Player extends _Player {}
-
-// export const Game = _Game;
-// export const Question = _Question;
-// export const Team = _Team;
-// export const Answer = _Answer;
-// export const Player = _Player;
-
-export * from "./game/Question";
-export * from "./game/Game";
-export * from "./game/Team";
-export * from "./game/Answer";
-export * from "./game/player";
+export * from "./src/Question";
+export * from "./src/Game";
+export * from "./src/Team";
+export * from "./src/Answer";
+export * from "./src/Player";
 
 export namespace GameProps {
-
     export interface Member {
         id?: any;
         name: string;
@@ -44,7 +26,7 @@ export namespace GameProps {
         name: string;
         members: Member[];
         answers: Answer[];
-        key: string;
+        key: string | ObjectId;
     }
 
     export interface Choice {
@@ -53,6 +35,7 @@ export namespace GameProps {
     }
 
     export interface Question {
+        _id: ObjectId | string;
         question: string;
         type: string;
         answer: string;
@@ -66,7 +49,7 @@ export namespace GameProps {
     }
 
     export interface Game {
-        _id: string;
+        _id: ObjectId | string;
         name: string;
         description: string;
         image: string;
@@ -80,9 +63,6 @@ export namespace GameProps {
         needsUpdate: boolean;
         updatesQueued: number;
     }
-
 }
-
-
 
 //export default Game;

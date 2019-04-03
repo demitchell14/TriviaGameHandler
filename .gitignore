@@ -8,7 +8,7 @@
 out
 gen
 
-/json/
+test/json
 
 bin/**/*
 

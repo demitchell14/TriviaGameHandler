@@ -10,6 +10,7 @@
         "watch": "tsc -w",
         "test": "mocha -r ts-node/register test/**/*.spec.ts",
         "test-game": "mocha -r ts-node/register test/game.spec.ts",
+        "test-live": "mocha -r ts-node/register test/live.spec.ts",
         "test-question": "mocha -r ts-node/register test/question.spec.ts",
         "test-team": "mocha -r ts-node/register test/team.spec.ts"
     },
@@ -17,13 +18,14 @@
     "license": "ISC",
     "dependencies": {
         "moment": "^2.22.2",
-        "uuid": "^3.3.2"
+        "bson": "^4.0.2"
     },
     "devDependencies": {
         "@types/chai": "^4.1.7",
         "@types/mocha": "^5.2.5",
         "@types/node": "^10.12.5",
         "@types/lodash": "^4.14.119",
+        "@types/bson": "^4.0.0",
         "typescript": "^3.1.6",
         "lodash": "^4.17.11",
         "prettier": "~1.15.3",
