@@ -1,16 +1,14 @@
-/**
- * @prettier
- */
 import Team from "./Team";
 // import Player from "./Player";
 import Question, { QuestionOptions, Type as QType } from "./Question";
-// import * as moment from "moment";
+import * as moment from "moment";
 // import { Moment } from "moment";
+import { ObjectId } from "bson";
 
 const MAX_QUEUE = 1;
 
 export class Game {
-    _id: any;
+    _id: ObjectId;
     name: string;
     description: string;
     image: string;
@@ -27,20 +25,21 @@ export class Game {
     private updatesQueued: number;
 
     constructor(options: GameOptions) {
-        this.name = options.name || "unnamed game";
-        if (options._id)
-            this["_id"] = options["_id"];
+        this.name = options.name;
+
+        if (typeof options._id !== "undefined") {
+            if (typeof options._id === "string")
+                this._id = ObjectId.createFromHexString(options._id)
+            else
+                this._id = options._id;
+        } else
+            this._id = new ObjectId();
 
         this.paused =
             typeof options.paused !== "undefined" ? options.paused : true;
-
         this.currentQuestionId = options.currentQuestionId || 0;
-
-        if (options.description)
-            this.description = options.description;
-
-        if (options.image)
-            this.image = options.image; // TODO || "some default image"
+        this.description = options.description;
+        this.image = options.image; // TODO || "some default image"
 
         if (options.teams) {
             options.teams = options.teams.map((team) => {
@@ -71,27 +70,25 @@ export class Game {
             throw new Error("Token is required to run a Game.");
         }
         if (this.name === "" || typeof this.name !== "string") {
-            //throw new Error("Name is required to run a Game.");
+            throw new Error("Name is required to run a Game.");
         }
         this.needsUpdate = false;
         this.updatesQueued = 0;
 
         if (typeof options.startTime !== "undefined") {
-            this.startTime = options.startTime;
+            this.startTime = moment(options.startTime).format(
+                "YYYY/MM/DD HH:MM a",
+            );
         } else {
-            let d = new Date();
-            this.startTime = `${d.getFullYear()}-${d.getUTCMonth() +
-                1}-${d.getUTCDate()} ${d.getHours()}:${d.getMinutes()}`;
+            this.startTime = moment().format("YYYY/MM/DD HH:MM a");
+            // let d = new Date();
+            // this.startTime = `${d.getFullYear()}-${d.getUTCMonth()+1}-${d.getUTCDate()} ${d.getHours()}:${d.getMinutes()}`
         }
     }
 
     setName(str: string) {
         this.name = str;
         this.update(true);
-    }
-
-    getName() {
-        return this.name;
     }
 
     setToken(str: string) {
@@ -107,41 +104,30 @@ export class Game {
 
     // -- >> Team Functions
 
-    hasTeam(team: string | Team): boolean {
-        if (typeof team !== "string") {
-            //console.log("WTF ", team.name);
-            team = team.name;
+    hasTeam(team: string | ObjectId): boolean {
+        let method = "teamName";
+        if (typeof team === "string") {
+            let uuidPattern = new RegExp(
+                /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/,
+            );
+            if (team.match(uuidPattern)) throw "This is old method.";
+            method = "_id";
         }
-        let uuidPattern = new RegExp(
-            /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
-        );
-        //console.log(team);
-        if (!team.match(uuidPattern)) {
-            // -- Find team based on name
-            return this.teams.find((t) => t.name === team) !== undefined;
-        } else {
-            // -- Find team based on authorize string
 
-            return this.teams.find((t) => t.key === team) !== undefined;
-        }
-        //if (token.key && token.key.match(uuidPattern)) {
+        return this.teams.find((t) => t[method] === team) !== undefined;
     }
 
-    getTeam(team: string | Team): Team {
-        if (typeof team !== "string") team = team.name;
-
-        //console.log(name);
-
-        let uuidPattern = new RegExp(
-            /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
-        );
-        if (!team.match(uuidPattern)) {
-            // -- Find team based on name
-            return this.teams.find((t) => t.name === team);
-        } else {
-            // -- Find team based on authorize string
-            return this.teams.find((t) => t.key === team);
+    getTeam(team: string | ObjectId): Team {
+        let method = "teamName";
+        if (typeof team === "string") {
+            let uuidPattern = new RegExp(
+                /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/,
+            );
+            if (team.match(uuidPattern)) throw "This is old method.";
+            method = "_id";
         }
+
+        return this.teams.find((t) => t[method] === team);
     }
 
     addTeam(...teams: any[]): boolean {
@@ -156,7 +142,7 @@ export class Game {
                     //console.log("Here sadly,");
                     let t = new (Function.prototype.bind.apply(Team, [
                         this,
-                        team
+                        team,
                     ]))();
                     //console.log(t);
                     this.teams.push(t);
@@ -254,6 +240,7 @@ export class Game {
                     q.timeLeft = -1;
                 });
                 this.currentQuestionId = 0;
+                this.update(true);
             },
             next: () => {
                 let curr = this.question().current();
@@ -264,7 +251,7 @@ export class Game {
                     this.currentQuestionId++;
                     return this.question().current();
                 } else this.currentQuestionId = -100;
-            }
+            },
         };
     }
 
@@ -293,9 +280,8 @@ export class Game {
             console.debug(
                 `${this.updatesQueued} Total Updates Queued for Game: '${
                     this.name
-                }.'`
+                }.'`,
             );
-            return this.needsUpdate;
             return this.updatesQueued >= MAX_QUEUE;
         }
     }
@@ -306,8 +292,8 @@ export class Game {
 }
 
 export interface GameOptions {
-    _id?: any;
-    name?: string;
+    _id?: ObjectId|string;
+    name: string;
     token: string;
 
     paused?: boolean;
