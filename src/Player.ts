@@ -1,7 +1,7 @@
 //import Team from "./Team";
 //import Game from "./Game";
 
-class Player {
+export class Player {
     id: string;
     name: string;
     setKey: (str: string) => void;
@@ -10,7 +10,7 @@ class Player {
     //team: Team;
     //game: Game;
 
-    constructor(id:string|PlayerOptions, nickname?:string) {
+    constructor(id: string | PlayerOptions, nickname?: string) {
         if (typeof id === "string") {
             if (typeof nickname === "undefined") {
                 this.name = id;
@@ -20,10 +20,8 @@ class Player {
                 this.name = nickname;
             }
         } else {
-
             this.id = id.id;
             this.name = id.name;
-
         }
 
         let key;
@@ -40,11 +38,8 @@ class Player {
         return {
             id: this.getKey(),
             name: this.name,
-        }
+        };
     }
-
-
-
 }
 
 export interface PlayerOptions {
