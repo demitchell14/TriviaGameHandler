@@ -1,19 +1,17 @@
-/**
- * @prettier
- */
 import { expect } from "chai";
 import "mocha";
 
 import * as fs from "fs";
 
-import Game from "../bin/Game";
-import Team from "../bin/game/Team";
-import Question, {
+import {
+    Game,
+    Team,
+    Question,
     Choice,
     ChoiceOpts,
-    Type as QuestionType
-} from "../bin/game/Question";
-import Player from "../bin/game/Player";
+    Type as QuestionType,
+    Player,
+} from "..";
 
 describe("Ways to create Game", () => {
     it("Title/token Only", () => {
@@ -29,7 +27,7 @@ describe("Ways to create Game", () => {
         const result = new Game({
             name: "Test 2",
             token: "atoken",
-            teams: teams
+            teams: teams,
         });
 
         //console.log(result);
@@ -51,18 +49,18 @@ describe("Ways to create Game", () => {
             new Question({
                 //id: 1,
                 question: "Who am I?",
-                choices: [new Choice({ answer: "Me" })]
+                choices: [new Choice({ answer: "Me" })],
             }),
             new Question({
                 //id: 2,
                 question: "Who are you??",
-                type: QuestionType.OPEN_ENDED
-            })
+                type: QuestionType.OPEN_ENDED,
+            }),
         ];
         const result = new Game({
             name: "Test 2",
             token: "atoken",
-            questions: questions
+            questions: questions,
         });
 
         expect(result.name).equal("Test 2");
@@ -82,13 +80,13 @@ describe("Ways to create Game", () => {
             new Question({
                 //id: 1,
                 question: "Who am I?",
-                choices: [new Choice({ answer: "Me" })]
+                choices: [new Choice({ answer: "Me" })],
             }),
             new Question({
                 //id: 2,
                 question: "Who are you??",
-                type: QuestionType.OPEN_ENDED
-            })
+                type: QuestionType.OPEN_ENDED,
+            }),
         ];
 
         let teams = [new Team("Team 1"), new Team("Team 2")];
@@ -97,7 +95,7 @@ describe("Ways to create Game", () => {
             name: "Test 2",
             token: "atoken",
             teams: teams,
-            questions: questions
+            questions: questions,
         });
 
         expect(result.name).equal("Test 2");
@@ -119,16 +117,16 @@ describe("Ways to create Game", () => {
 
     it("Build from JSON", () => {
         let content = JSON.parse(
-            fs.readFileSync("json/game123.json", { encoding: "UTF-8" })
+            fs.readFileSync("./test/json/game123.json", { encoding: "UTF-8" }),
         );
         const result = new Game(content);
 
         expect(result.teams.length, "Teams did not import correctly.").equals(
-            content.teams.length
+            content.teams.length,
         );
         expect(
             result.questions.length,
-            "Questions did not import correctly."
+            "Questions did not import correctly.",
         ).equals(content.questions.length);
         expect(result.token).equals(content.token);
         expect(result.name).equals(content.name);

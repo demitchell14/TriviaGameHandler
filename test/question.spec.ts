@@ -1,19 +1,12 @@
-/**
- * @prettier
- */
 import { expect } from "chai";
 import "mocha";
 
-import Question, {
-    Choice,
-    ChoiceOpts,
-    Type as QuestionType
-} from "../bin/game/Question";
+import { Question, Choice, ChoiceOpts, Type as QuestionType } from "..";
 
 describe("Creating Questions", () => {
     it("w/ no answers", () => {
         const result = new Question({
-            question: "Who am I?"
+            question: "Who am I?",
         });
 
         expect(result.question).equals("Who am I?");
@@ -22,21 +15,21 @@ describe("Creating Questions", () => {
 
     it("w/ 3 answers", () => {
         let other = new Choice({
-            answer: "I am me"
+            answer: "I am me",
         });
 
         let correct = new Choice({
             answer: "I am you",
-            correct: true
+            correct: true,
         });
 
         let delayed = new Choice({
-            answer: "I am neither"
+            answer: "I am neither",
         });
         const result = new Question({
             question: "Who am I?",
             type: QuestionType.MULTIPLE_CHOICE,
-            choices: [other, correct]
+            choices: [other, correct],
         });
 
         result.addChoice(delayed);
