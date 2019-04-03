@@ -29,11 +29,9 @@ export class Game {
 
         if (typeof options._id !== "undefined") {
             if (typeof options._id === "string")
-                this._id = ObjectId.createFromHexString(options._id)
-            else
-                this._id = options._id;
-        } else
-            this._id = new ObjectId();
+                this._id = ObjectId.createFromHexString(options._id);
+            else this._id = options._id;
+        } else this._id = new ObjectId();
 
         this.paused =
             typeof options.paused !== "undefined" ? options.paused : true;
@@ -292,7 +290,7 @@ export class Game {
 }
 
 export interface GameOptions {
-    _id?: ObjectId|string;
+    _id?: ObjectId | string;
     name: string;
     token: string;
 

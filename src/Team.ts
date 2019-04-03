@@ -2,7 +2,7 @@ import Player, { PlayerOptions } from "./Player";
 import * as _ from "lodash";
 import Question, { Choice, Type } from "./Question";
 import { ObjectID, ObjectId } from "bson";
-import {GameProps, Answer} from "../index";
+import { GameProps, Answer } from "../index";
 // import Answer = GameProps.Answer;
 
 export class Team {
