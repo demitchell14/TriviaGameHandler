@@ -1,13 +1,13 @@
-import {ObjectId} from "bson";
-import {symlink} from "fs";
-import {Type as QuestionType} from "..";
+import { ObjectId } from "bson";
+import { symlink } from "fs";
+import { Type as QuestionType } from "..";
 
 export class Answer {
     _id: ObjectId;
     question: string;
     answer: string;
     order: number;
-    correct: boolean|"Judgement Required";
+    correct: boolean | "Judgement Required";
 
     constructor(
         answer: string | AnswerOptions,
@@ -43,6 +43,6 @@ export interface AnswerOptions {
     answer: string;
     type?: string;
     order?: number;
-    correct?: boolean|"Judgement Required";
+    correct?: boolean | "Judgement Required";
 }
 export default Answer;
