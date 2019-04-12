@@ -102,27 +102,31 @@ export class Game {
 
     // -- >> Team Functions
 
-    hasTeam(team: string | ObjectId): boolean {
-        let method = "teamName";
-        if (typeof team === "string") {
+    hasTeam(team: string | ObjectId | Team): boolean {
+        let method = "key";
+        if (typeof team === "string" && !team.match(/^\/(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i)) {
             let uuidPattern = new RegExp(
                 /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/,
             );
             if (team.match(uuidPattern)) throw "This is old method.";
-            method = "_id";
+            method = "name";
         }
-
-        return this.teams.find((t) => t[method] === team) !== undefined;
+        if (team instanceof Team) {
+            team = team.key
+        }
+        console.log(team);
+        // @ts-ignore
+        return this.teams.find((t) => typeof team === "string" ? t[method] === team : team.equals(t[method])) !== undefined;
     }
 
-    getTeam(team: string | ObjectId): Team {
-        let method = "teamName";
-        if (typeof team === "string") {
+    getTeam(team: string | ObjectId | Team): Team | null {
+        let method = "key";
+        if (typeof team === "string" && !team.match(/^\/(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i)) {
             let uuidPattern = new RegExp(
                 /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/,
             );
             if (team.match(uuidPattern)) throw "This is old method.";
-            method = "_id";
+            method = "name";
         }
 
         return this.teams.find((t) => t[method] === team);
