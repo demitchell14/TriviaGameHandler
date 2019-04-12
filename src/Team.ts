@@ -117,27 +117,31 @@ export class Team {
                 return ans.question === question.question;
             }
         });
+        let response = new Answer({
+            _id: question._id,
+            type: question.type,
+            answer: choice instanceof Choice ? choice.answer : choice,
+            correct:
+                question.type === Type.MULTIPLE_CHOICE
+                    ? question.correct(choice)
+                    : "Judgement Required",
+            question: question.question,
+        });
         if (exists) {
-            //console.debug(exists);
-            throw new Error(`${this.name} has already answered that question.`);
+            response = exists;
+            response.setAnswer(typeof choice === "string" ? choice : choice.answer,
+                question.type === Type.MULTIPLE_CHOICE
+                    ? question.correct(choice)
+                    : "Judgement Required")
         } else {
-            let response = new Answer({
-                _id: question._id,
-                type: question.type,
-                answer: choice instanceof Choice ? choice.answer : choice,
-                correct:
-                    question.type === Type.MULTIPLE_CHOICE
-                        ? question.correct(choice)
-                        : "Judgement Required",
-                question: question.question,
-            });
-
-            //console.log(response)
             this.answers.push(response);
-
-            //console.log(this.answers);
-            return response;
         }
+        console.log(question);
+
+        //console.log(response)
+
+        //console.log(this.answers);
+        return response;
     }
 
     toJSON() {
