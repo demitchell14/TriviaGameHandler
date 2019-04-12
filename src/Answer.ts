@@ -25,6 +25,7 @@ export class Answer {
                 if (typeof order === "number") this.order = order;
             }
         } else {
+            this._id = answer._id;
             this.answer = answer.answer;
             this.question = answer.question || "";
             this.correct = answer.correct || false;
@@ -34,6 +35,11 @@ export class Answer {
 
     setQuestion(question: string) {
         this.question = question;
+    }
+
+    setAnswer(answer: string, correct:boolean|"Judgement Required" = false) {
+        this.answer  = answer;
+        this.correct = false;
     }
 }
 
