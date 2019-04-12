@@ -3,11 +3,11 @@
  */
 import { ObjectId } from "bson";
 
-export * from "./src/Question";
-export * from "./src/Game";
-export * from "./src/Team";
-export * from "./src/Answer";
-export * from "./src/Player";
+export * from "./Question";
+export * from "./Game";
+export * from "./Team";
+export * from "./Answer";
+export * from "./Player";
 
 export namespace GameProps {
     export interface Member {

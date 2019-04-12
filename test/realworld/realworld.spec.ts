@@ -9,8 +9,8 @@ import * as _ from "lodash";
 import { expect } from "chai";
 import "mocha";
 
-import { Game } from "../../Game";
-import { GameProps } from "../../game/GameProps";
+import { Game, GameProps } from "../../src"
+
 
 describe("Manage Game 1", () => {
     const GAME1_LOCATION = path.join(__dirname, "./game-1.json");

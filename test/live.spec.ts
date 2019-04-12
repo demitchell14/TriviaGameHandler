@@ -12,7 +12,7 @@ import {
     Type as QuestionType,
     Player,
     TeamOptions,
-} from "..";
+} from "../src";
 import { ObjectId } from "bson";
 
 describe("Run one game", () => {
