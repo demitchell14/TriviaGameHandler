@@ -2,10 +2,10 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2015",
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "sourceMap": true,
     "declaration": false,
-    "outDir": "bin",
+    "outDir": "lib",
     "allowSyntheticDefaultImports": true
   },
   "exclude": [

@@ -1,11 +1,15 @@
 {
     "name": "notrivia",
     "version": "1.0.0",
+    "author": "Devin Mitchell",
+    "license": "ISC",
     "description": "NoTrivia - A trivia game manager written in javascript, for javascript.",
     "private": true,
-    "main": "bin/index.js",
+    "types": "types",
+    "main": "lib/index.js",
+
     "scripts": {
-        "build": "tsc -b",
+        "build": "rmdir /s /Q lib types & tsc -b tsconfig.prod.json",
         "prettier": "prettier --config ./.prettierrc **/*.ts --write",
         "watch": "tsc -w",
         "test": "mocha -r ts-node/register test/**/*.spec.ts",
@@ -14,8 +18,7 @@
         "test-question": "mocha -r ts-node/register test/question.spec.ts",
         "test-team": "mocha -r ts-node/register test/team.spec.ts"
     },
-    "author": "Devin Mitchell",
-    "license": "ISC",
+
     "dependencies": {
         "moment": "^2.22.2",
         "bson": "^4.0.2"

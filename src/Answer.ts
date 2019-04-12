@@ -1,6 +1,6 @@
 import { ObjectId } from "bson";
 import { symlink } from "fs";
-import { Type as QuestionType } from "..";
+import { Type as QuestionType } from "./index";
 
 export class Answer {
     _id: ObjectId;

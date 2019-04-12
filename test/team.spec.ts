@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 
-import { Team, Player } from "..";
+import { Team, Player } from "../src";
 
 describe("Ways to create Team", () => {
     it("Name Only", () => {

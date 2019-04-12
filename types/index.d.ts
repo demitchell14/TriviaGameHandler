@@ -2,39 +2,33 @@
  * @prettier
  */
 import { ObjectId } from "bson";
-
-export * from "./src/Question";
-export * from "./src/Game";
-export * from "./src/Team";
-export * from "./src/Answer";
-export * from "./src/Player";
-
-export namespace GameProps {
-    export interface Member {
+export * from "./Question";
+export * from "./Game";
+export * from "./Team";
+export * from "./Answer";
+export * from "./Player";
+export declare namespace GameProps {
+    interface Member {
         id?: any;
         name: string;
     }
-
-    export interface Answer {
+    interface Answer {
         type: string;
         answer?: any;
         correct: boolean;
         question: string;
     }
-
-    export interface Team {
+    interface Team {
         name: string;
         members: Member[];
         answers: Answer[];
         key: string | ObjectId;
     }
-
-    export interface Choice {
+    interface Choice {
         answer: string;
         correct: boolean;
     }
-
-    export interface Question {
+    interface Question {
         _id: ObjectId | string;
         question: string;
         type: string;
@@ -47,8 +41,7 @@ export namespace GameProps {
         points: number;
         timeLimit: number;
     }
-
-    export interface Game {
+    interface Game {
         _id: ObjectId | string;
         name: string;
         description: string;
@@ -64,5 +57,3 @@ export namespace GameProps {
         updatesQueued: number;
     }
 }
-
-//export default Game;

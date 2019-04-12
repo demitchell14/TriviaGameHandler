@@ -8,6 +8,8 @@
 out
 gen
 
+*.js.map
+
 test/json
 
 bin/**/*

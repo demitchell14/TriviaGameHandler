@@ -11,7 +11,7 @@ import {
     ChoiceOpts,
     Type as QuestionType,
     Player,
-} from "..";
+} from "../src";
 
 describe("Ways to create Game", () => {
     it("Title/token Only", () => {

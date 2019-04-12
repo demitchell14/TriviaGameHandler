@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 
-import { Question, Choice, ChoiceOpts, Type as QuestionType } from "..";
+import { Question, Choice, ChoiceOpts, Type as QuestionType } from "../src";
 
 describe("Creating Questions", () => {
     it("w/ no answers", () => {
