@@ -1,4 +1,4 @@
-import Team from "./Team";
+import Team, {TeamOptions} from "./Team";
 // import Player from "./Player";
 import Question, { QuestionOptions, Type as QType } from "./Question";
 import * as moment from "moment";
@@ -128,8 +128,12 @@ export class Game {
             if (team.match(uuidPattern)) throw "This is old method.";
             method = "name";
         }
+        if (team instanceof Team) {
+            team = team.key
+        }
 
-        return this.teams.find((t) => t[method] === team);
+        // @ts-ignore
+        return this.teams.find((t) => typeof team === "string" && method === "name" ? t[method] === team : team.equals(t[method]));
     }
 
     addTeam(...teams: any[]): boolean {
